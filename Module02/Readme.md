@@ -49,6 +49,24 @@ Pointer == Address in memory.
 
 
 
+### Conventional Commit Messages
+Not required for this class, but often expected in industry
+
+https://www.conventionalcommits.org/en/v1.0.0/ 
+
+
+- Format: 
+  ```
+  <type>[optional scope]: <description>
+  
+  [optional body]
+  
+  [optional footer(s)]
+  ```
+
+Type options: fix:, feat:, build:, chore:, ci:, docs:, style:, refactor:, perf:, test:
+
+
 ### Pre-commit hooks
 
 **NOT REQUIRED** but fairly common in industry.
@@ -59,7 +77,11 @@ Pointer == Address in memory.
 - Prevent bad code from being committed 
 - Example from one of my projecsts [see example_pre-commit-config.yaml](example_pre-commit-config.yaml)
 
-Basis of file for C:
+
+
+
+
+Basic of file for C:
 
 ```yaml
 # Pre-commit hooks configuration
