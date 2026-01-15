@@ -1,0 +1,88 @@
+# Module 02 Live Session
+
+
+
+## Connection to 5001 / 5002 Material 
+- [ ]  Can you please highlight what are the most important concepts from 5001 or 5002 that we should be rehearsing or building upon in this part of the course so far?
+
+- [ ] Could you think of additional sample problems pertaining to this week's topics that mix some fundamentals from 5001 to work through, showing us examples of how we are building up on what we've learned so far?
+  
+
+- Technically, it is all connected because programming is cumulative.... but let's cover a few examples. 
+
+
+  
+
+
+
+## Stack and Pointers?
+- [ ] I would like to go over the memory stack
+- [ ] review passing pointers as args 
+
+-  Note: module 03 covers pointers, so if this feels a bit ahead, it is!
+
+
+### Stack!
+
+Stack == Short term memory.
+- Local variables
+- Function parameters
+- Function return address
+- Fast access
+- Limited size
+
+### Pointers!
+Pointer == Address in memory.
+- Variables have addresses
+- Pointers store addresses
+- Dereferencing pointers to access data
+- Pointer arithmetic
+- Used for dynamic memory management
+
+
+
+## Commit and Industry Standards
+- [ ] Can we talk about git commit messages and industry standards for them?
+
+
+## Common Practices
+
+
+
+### Pre-commit hooks
+
+**NOT REQUIRED** but fairly common in industry.
+
+- Automated scripts that run before each commit
+- Enforce coding standards
+- Run tests
+- Prevent bad code from being committed 
+- Example from one of my projecsts [see example_pre-commit-config.yaml](example_pre-commit-config.yaml)
+
+Basis of file for C:
+
+```yaml
+# Pre-commit hooks configuration
+repos:
+    - repo: local
+      hooks:
+        - id: clang-format
+          name: clang-format
+          entry: clang-format -i
+
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.5.0
+      hooks:
+        - id: trailing-whitespace
+        - id: end-of-file-fixer
+        - id: check-yaml
+        - id: check-added-large-files
+            args: ['--maxkb=2000']  # Set to 2000KB (2MB), adjust as needed
+
+
+     - repo: https://github.com/compilerla/conventional-pre-commit
+       rev: v2.4.0
+       hooks:
+         - id: conventional-pre-commit
+           stages: [commit-msg]
+```

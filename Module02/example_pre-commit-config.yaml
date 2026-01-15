@@ -1,0 +1,43 @@
+# Pre-commit hooks configuration
+# This is an actual example from
+# one of my development / research projects using Rust.
+# However, these type of hooks are common for
+# industry (well beyond the scope of this class). 
+# To use pre-commit, install it via pip:
+#    pip install pre-commit
+# Then, install the git hooks in your repository:
+#    pre-commit install
+# You can run the hooks manually on all files with:
+#    pre-commit run --all-files 
+repos:
+  - repo: local
+    hooks:
+      - id: cargo-fmt
+        name: cargo fmt
+        entry: cargo fmt --all --
+        language: system
+        types: [rust]
+        pass_filenames: false
+
+      - id: cargo-clippy
+        name: cargo clippy
+        entry: cargo clippy --all-targets --all-features --workspace -- -D warnings
+        language: system
+        types: [rust]
+        pass_filenames: false
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=2000']  # Set to 2000KB (2MB), adjust as needed
+
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v2.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
