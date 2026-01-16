@@ -48,7 +48,7 @@ Pointer == Address in memory.
 
 
 ## Commit and Industry Standards
-- [ ] Can we talk about git commit messages and industry standards for them?
+- [x] Can we talk about git commit messages and industry standards for them?
 
 
 ## Common Practices
