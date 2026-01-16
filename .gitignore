@@ -1,0 +1,46 @@
+# ignore file for common C projects
+
+# Compiled object files
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.libs
+# Compiled static libraries
+*.a
+*.lib
+# Compiled dynamic libraries
+*.so
+*.dylib
+*.dll
+# Executables
+*.exe
+*.out
+*.app
+# Debug files
+*.dSYM/
+*.pdb
+# IDE files
+.vscode/
+*.code-workspace
+*.idea/
+*.sublime-project
+*.sublime-workspace
+# Backup files
+*~
+*.bak
+*.swp
+# Logs
+*.log
+# Coverage files
+*.gcda
+*.gcno
+# Other
+tags
+*.class
+*.jar
+*.war
+*.ear
+*.pyc
+__pycache__/
