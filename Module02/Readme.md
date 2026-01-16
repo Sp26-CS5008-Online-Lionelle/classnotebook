@@ -95,25 +95,27 @@ Basic of file for C:
 ```yaml
 # Pre-commit hooks configuration
 repos:
-    - repo: local
-      hooks:
-        - id: clang-format
-          name: clang-format
-          entry: clang-format -i
+  - repo: local
+    hooks:
+      - id: clang-format
+        name: clang-format
+        entry: clang-format -i
+        language: system
+        types: [c, c++]
+        files: \.(c|cpp|cc|cxx|h|hpp)$
 
-    - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v4.5.0
-      hooks:
-        - id: trailing-whitespace
-        - id: end-of-file-fixer
-        - id: check-yaml
-        - id: check-added-large-files
-            args: ['--maxkb=2000']  # Set to 2000KB (2MB), adjust as needed
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=2000']
 
-
-     - repo: https://github.com/compilerla/conventional-pre-commit
-       rev: v2.4.0
-       hooks:
-         - id: conventional-pre-commit
-           stages: [commit-msg]
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v2.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
 ```
