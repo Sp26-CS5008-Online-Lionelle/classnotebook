@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <termios.h>
 #include <unistd.h>
+#include <time.h>
 
 long int _bs_opCount = 0;
 
@@ -64,10 +65,31 @@ void print_table_row(int pass, int index, long int opCount, int* array, int size
 }
 
 void swap(int* a, int* b) {
-
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+    _bs_opCount++;
 }
 
 void bubble_sort(int* array, int size, int* col_sizes) {
+    print_table_row(-1, -1, _bs_opCount, array, size, col_sizes);
+
+    for(int i = 0; i < size; i++){
+        _bs_opCount++;
+        bool swapped = false;
+        for(int j = 0; j < size - i - 1; j++) {
+            _bs_opCount++;
+            if (array[j] > array[j+1]) {
+                swap(&array[j], &array[j+1]);
+                swapped = true;
+            }
+
+            print_table_row(i, j, _bs_opCount, array, size, col_sizes);
+        } // inner loop
+        if (!swapped) break;
+
+    } // outer loop
+
 
 }
 
@@ -80,6 +102,8 @@ int* get_randomized_array(int size) {
 }
 
 int main(int argc, char* argv[]) {
+    srand(time(NULL));  // seed once at start of program
+
     int array_size = 4;
     if (argc > 1) {
         array_size = atoi(argv[1]);

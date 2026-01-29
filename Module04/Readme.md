@@ -1,7 +1,7 @@
 # Module 04 - Live Session
 
 
--[ ] Can we practice nested ForLoops? I am having difficulty understanding/visualizing the complex code - each iteration and counting the number of operations at the end of each iteration.
+- [x] Can we practice nested ForLoops? I am having difficulty understanding/visualizing the complex code - each iteration and counting the number of operations at the end of each iteration.
 
 - [ ] Discussion and practicing examples when we use switch statements without the break statement.
 
