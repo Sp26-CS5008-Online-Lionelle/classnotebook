@@ -90,8 +90,15 @@ StudentRecord* read_csv(const char* filename, int* record_count) {
 
 // write a new record to the csv file
 void write_csv(const char* filename, const StudentRecord* record) {
-
+    FILE* file = fopen(filename, "a");
+    if (!file) {
+        printf("Error opening the file\n");
+        return;
+    }
+    fprintf(file, "%s,%s,%s,%s\n", record->name, record->student_id, record->course, record->campus);
+    fclose(file);
 }
+
 
 
 
@@ -108,81 +115,111 @@ void print_help() {
     printf("  --help                 Show this help message\n");
 }
 
+bool has_help(int argc, char* argv[]) {
+    for(int i = 1; i < argc; i++) {
+        if(strcmp(argv[i], "--help") == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool has_print(int argc, char* argv[]) {
+    for(int i = 1; i < argc; i++) {
+        if(strcmp(argv[i], "--print") == 0) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 
+char* get_arg_value(int argc, char* argv[], const char* arg_name) {
+    for(int i = 1; i < argc - 1; i++) {
+        if(strcmp(argv[i], arg_name) == 0) {
+            return argv[i+1];
+        }
+    }
+    return NULL;
+}
 
-
-
-
-
-
+char* prompt_for_input(const char* prompt, char* buffer, size_t buffer_size) {
+    printf("%s", prompt);
+    if(fgets(buffer, buffer_size, stdin)) {
+        buffer[strcspn(buffer, "\n")] = '\0';
+        if(strlen(buffer) > 0) {
+            return buffer;
+        }
+    }
+    return NULL;
+}
 
 int main(int argc, char* argv[]) {
-    // if (has_help(argc, argv)) {
-    //     print_help();
-    //     return EXIT_SUCCESS;
-    // }
+     if (has_help(argc, argv)) {
+         print_help();
+         return EXIT_SUCCESS;
+     }
 
-    // const char* filename = "students.csv";
+    const char* filename = "students.csv";
 
-    // int record_count = 0;
-    // StudentRecord* records = read_csv(filename, &record_count);
+     int record_count = 0;
+     StudentRecord* records = read_csv(filename, &record_count);
 
-    // if (has_print(argc, argv)) {
-    //     print_all(records, record_count);
-    //     free(records);
-    //     return EXIT_SUCCESS;
-    // }
+    if (has_print(argc, argv)) {
+         print_all(records, record_count);
+         free(records);
+         return EXIT_SUCCESS;
+     }
 
 
 
-    // char* name = get_arg_value(argc, argv, "--name");
-    // char* student_id = get_arg_value(argc, argv, "--id");
-    // char* course = get_arg_value(argc, argv, "--course");
-    // char* campus = get_arg_value(argc, argv, "--campus");
+    char* name = get_arg_value(argc, argv, "--name");
+    char* student_id = get_arg_value(argc, argv, "--id");
+    char* course = get_arg_value(argc, argv, "--course");
+    char* campus = get_arg_value(argc, argv, "--campus");
 
     // // Buffers for prompted input
-    // char name_buf[50];
-    // char id_buf[20];
-    // char course_buf[50];
-    // char campus_buf[50];
+    char name_buf[50];
+    char id_buf[20];
+    char course_buf[50];
+    char campus_buf[50];
 
     // // Try to find missing name/id from existing records
-    // if (!name && student_id) {
-    //     name = find_name_by_id(records, record_count, student_id);
-    // } else if (!student_id && name) {
-    //     student_id = find_id_by_name(records, record_count, name);
-    // }
+    if (!name && student_id) {
+        name = find_name_by_id(records, record_count, student_id);
+    } else if (!student_id && name) {
+        student_id = find_id_by_name(records, record_count, name);
+    }
 
     // // Prompt for any missing fields
-    // if (!name) {
-    //     name = prompt_for_input("Enter name: ", name_buf, sizeof(name_buf));
-    // }
-    // if (!student_id) {
-    //     student_id = prompt_for_input("Enter student ID: ", id_buf, sizeof(id_buf));
-    // }
-    // if (!course) {
-    //     course = prompt_for_input("Enter course: ", course_buf, sizeof(course_buf));
-    // }
-    // if (!campus) {
-    //     campus = prompt_for_input("Enter campus: ", campus_buf, sizeof(campus_buf));
-    // }
+    if (!name) {
+        name = prompt_for_input("Enter name: ", name_buf, sizeof(name_buf));
+    }
+    if (!student_id) {
+        student_id = prompt_for_input("Enter student ID: ", id_buf, sizeof(id_buf));
+    }
+    if (!course) {
+        course = prompt_for_input("Enter course: ", course_buf, sizeof(course_buf));
+    }
+    if (!campus) {
+        campus = prompt_for_input("Enter campus: ", campus_buf, sizeof(campus_buf));
+    }
 
     // Validate required fields
-    // if (!name || !student_id) {
-    //     printf("Error: Name and student ID are required.\n");
-    //     free(records);
-    //     return EXIT_FAILURE;
-    // }
+    if (!name || !student_id) {
+        printf("Error: Name and student ID are required.\n");
+        free(records);
+        return EXIT_FAILURE;
+    }
 
-    // StudentRecord new_record;
-    // set_new_record(&new_record, name, student_id, course, campus);
+    StudentRecord new_record;
+    set_new_record(&new_record, name, student_id, course, campus);
 
-    // write_csv(filename, &new_record);
-    // printf("Record added successfully:\n");
-    // print_record(&new_record);
+    write_csv(filename, &new_record);
+    printf("Record added successfully:\n");
+    print_record(&new_record);
 
-    // free(records);
+    free(records);
     return EXIT_SUCCESS;
 }

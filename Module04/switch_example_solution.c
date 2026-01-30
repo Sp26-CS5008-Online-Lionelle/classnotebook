@@ -67,7 +67,7 @@ void print_day_type(enum Day day) {
 
 /**
 Prompts for the year-month-day, returns an array with each as a number */
-int* get_calendary_day() {
+int* get_calendar_day() {
     int * date = malloc(3 * sizeof(int));
     printf("Enter a date (year-month-day): ");
     scanf("%d-%d-%d", &date[0], &date[1], &date[2]);
@@ -104,7 +104,7 @@ int calculate_day_of_week(int year, int month, int day) {
 // main that asks for someone to give a date in year-month-day, it calculates the
 // day of the week, and prints both messages
 int main() {
-    int* date = get_calendary_day();
+    int* date = get_calendar_day();
     int day_of_week = calculate_day_of_week(date[0], date[1], date[2]);
     print_day_message(day_of_week);
     print_day_type(day_of_week);
